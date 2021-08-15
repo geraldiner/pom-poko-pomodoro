@@ -16,9 +16,10 @@ const sessions = {
 let currentSession = "work";
 let numberOfSessions = 0;
 // let timerTime = sessions[currentSession].length * 60;
-let timerTime = 10;
-let timerMinText = `${getMinutes()}`;
-let timerSecText = `${getSeconds()}`;
+let timerTime = 3;
+let timerMinText = `${getMinutes(timerTime)}`;
+let secondsLeft = getSeconds(timerTime);
+let timerSecText = secondsLeft >= 10 ? secondsLeft : `0${secondsLeft}`;
 let sessionStart = undefined;
 
 const body = document.querySelector("body");
@@ -64,24 +65,43 @@ function setSession(e) {
 }
 
 function timerControl(e) {
-	console.log(currentSession, numberOfSessions);
 	if (e.target.id == "start") {
+		// timerTime = sessions[currentSession].length * 60;
 		sessionStart = setInterval(() => {
 			if (timerTime > 0) {
 				timerTime--;
 				console.log(timerTime);
 				timerMinText = `${getMinutes(timerTime)}`;
-				let secondsLeft = getSeconds(timerTime);
-				timerSecText = secondsLeft > 10 ? `${secondsLeft}` : `0${secondsLeft}`;
+				secondsLeft = getSeconds(timerTime);
+				timerSecText = secondsLeft >= 10 ? `${secondsLeft}` : `0${secondsLeft}`;
 				document.querySelector(".timer-text").innerText = `${timerMinText}:${timerSecText}`;
 			} else {
 				clearInterval(sessionStart);
+				currentSession = currentSession == "work" ? "short" : "work";
+				updatePom();
 			}
 		}, 1000);
 	} else if (e.target.id == "stop") {
-		console.log("hi");
 		clearInterval(sessionStart);
+	} else if (e.target.id == "reset") {
+		clearInterval(sessionStart);
+		timerTime = sessions[currentSession].length;
+		document.querySelector(".timer-text").innerText = `${sessions[currentSession].length}:00`;
 	}
+}
+
+function updatePom() {
+	console.log(currentSession);
+	document.querySelectorAll(".pom-btn").forEach(pomBtn => {
+		if (pomBtn.id == currentSession) {
+			pomBtn.classList.add("active");
+		} else {
+			pomBtn.classList.remove("active");
+		}
+		document.querySelector(".session-title").innerText = sessions[currentSession].title;
+		document.querySelector(".timer-text").innerText = `${sessions[currentSession].length}:00`;
+		timerTime = 3;
+	});
 }
 
 function getMinutes(seconds) {
@@ -91,3 +111,7 @@ function getMinutes(seconds) {
 function getSeconds(seconds) {
 	return Math.floor(seconds % 60);
 }
+
+window.addEventListener("load", () => {
+	document.querySelector(".timer-text").innerText = `${timerMinText}:${timerSecText}`;
+});
