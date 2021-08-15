@@ -8,7 +8,7 @@ A pomodoro app with [Pom Poko](https://en.wikipedia.org/wiki/Pom_Poko) friends.
 
 ![Pom Poko Pomodoro app](https://raw.githubusercontent.com/geraldiner/pom-poko-pomodoro/main/vanillajs-pom/assets/img/demo.gif)
 
-<div style="text-align:center;">
+<div align="center">
   <img src="https://raw.githubusercontent.com/geraldiner/pom-poko-pomodoro/main/vanillajs-pom/assets/img/pompoko-back-to-work.gif" alt="Pom Poko tanuki" />
 </div>
 
