@@ -1,10 +1,10 @@
 const sessions = {
 	work: {
-		length: 10,
+		length: 1,
 		title: "Work Pom",
 	},
 	short: {
-		length: 3,
+		length: 2,
 		title: "Short Break",
 	},
 	long: {
@@ -36,14 +36,14 @@ function editTimer(e) {
 	if (e.target.className === "timer-text") {
 		clearInterval(sessionStart);
 		const input = document.createElement("input");
-		input.setAttribute("type", "text");
-		input.setAttribute("value", parseInt(e.target.innerText));
-		input.setAttribute("autofocus", "");
+		input.type = "text";
+		input.value = parseInt(e.target.innerText);
+		input.autofocus = true;
 		input.addEventListener("focusout", () => {
 			sessions[currentSession].length = parseInt(input.value);
 			timerTime = setTimerTime();
 			const span = document.createElement("span");
-			span.setAttribute("class", "timer-text");
+			span.classList.add("timer-text");
 			setTimerText(span);
 			input.replaceWith(span);
 			updateButtons("reset");
@@ -73,7 +73,6 @@ function timerControl(e) {
 				setTimerText(getTimerTextNode());
 			} else {
 				clearInterval(sessionStart);
-				currentSession = currentSession == "work" ? "short" : "work";
 				updateToNextSession();
 			}
 		}, 1000);
@@ -81,12 +80,20 @@ function timerControl(e) {
 		clearInterval(sessionStart);
 	} else if (e.target.id == "reset") {
 		clearInterval(sessionStart);
-		timerTime = sessions[currentSession].length;
+		timerTime = setTimerTime();
 		setTimerText(getTimerTextNode());
 	}
 }
 
 function updateToNextSession() {
+	if (currentSession == "work") {
+		numberOfSessions++;
+	}
+	if (numberOfSessions >= 4) {
+		currentSession = "long";
+	} else {
+		currentSession = currentSession == "work" ? "short" : "work";
+	}
 	document.querySelectorAll(".pom-btn").forEach(pomBtn => {
 		if (pomBtn.id == currentSession) {
 			pomBtn.classList.add("active");
