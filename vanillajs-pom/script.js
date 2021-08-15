@@ -1,56 +1,53 @@
 const sessions = {
 	work: {
-		length: 25,
+		length: 10,
 		title: "Work Pom",
 	},
 	short: {
-		length: 5,
+		length: 3,
 		title: "Short Break",
 	},
 	long: {
-		length: 15,
+		length: 5,
 		title: "Long Break",
 	},
 };
 
 let currentSession = "work";
 let numberOfSessions = 0;
-// let timerTime = sessions[currentSession].length * 60;
-let timerTime = 3;
-let timerMinText = `${getMinutes(timerTime)}`;
-let secondsLeft = getSeconds(timerTime);
-let timerSecText = secondsLeft >= 10 ? secondsLeft : `0${secondsLeft}`;
 let sessionStart = undefined;
+let timerTime = setTimerTime();
+setTimerText(getTimerTextNode());
 
 const body = document.querySelector("body");
-
 body.addEventListener("click", editTimer);
 
 const pomBtns = document.querySelectorAll(".pom-btn");
-
 pomBtns.forEach(pomBtn => {
 	pomBtn.addEventListener("click", setSession);
 });
 
 const timerBtns = document.querySelectorAll(".timer-control");
-
 timerBtns.forEach(timerBtn => {
 	timerBtn.addEventListener("click", timerControl);
 });
 
 function editTimer(e) {
 	if (e.target.className === "timer-text") {
-		console.log(e);
 		const input = document.createElement("input");
 		input.setAttribute("type", "text");
 		input.setAttribute("value", parseInt(e.target.innerText));
 		input.setAttribute("autofocus", "");
 		input.addEventListener("focusout", () => {
 			sessions[currentSession].length = parseInt(input.value);
+			timerTime = setTimerTime();
 			const span = document.createElement("span");
 			span.setAttribute("class", "timer-text");
-			span.innerText = `${input.value}:00`;
+			setTimerText(span);
 			input.replaceWith(span);
+			const startBtn = document.querySelector("button#start");
+			startBtn.innerText = "Start";
+			startBtn.removeAttribute("disabled");
 		});
 		e.target.replaceWith(input);
 	}
@@ -60,38 +57,46 @@ function setSession(e) {
 	document.querySelector(".pom-btn.active").classList.remove("active");
 	e.target.classList.add("active");
 	currentSession = e.target.id;
+	timerTime = setTimerTime();
 	document.querySelector(".session-title").innerText = sessions[currentSession].title;
-	document.querySelector(".timer-text").innerText = `${sessions[currentSession].length}:00`;
+	setTimerText(getTimerTextNode());
 }
 
 function timerControl(e) {
 	if (e.target.id == "start") {
-		// timerTime = sessions[currentSession].length * 60;
+		const startBtn = document.querySelector("button#start");
+		startBtn.innerText = "Start";
+		startBtn.setAttribute("disabled", "disabled");
 		sessionStart = setInterval(() => {
 			if (timerTime > 0) {
 				timerTime--;
 				console.log(timerTime);
-				timerMinText = `${getMinutes(timerTime)}`;
-				secondsLeft = getSeconds(timerTime);
-				timerSecText = secondsLeft >= 10 ? `${secondsLeft}` : `0${secondsLeft}`;
-				document.querySelector(".timer-text").innerText = `${timerMinText}:${timerSecText}`;
+				setTimerText(getTimerTextNode());
 			} else {
 				clearInterval(sessionStart);
+				const startBtn = document.querySelector("button#start");
+				startBtn.innerText = "Start";
+				startBtn.removeAttribute("disabled");
 				currentSession = currentSession == "work" ? "short" : "work";
 				updatePom();
 			}
 		}, 1000);
 	} else if (e.target.id == "stop") {
 		clearInterval(sessionStart);
+		const startBtn = document.querySelector("button#start");
+		startBtn.removeAttribute("disabled");
+		startBtn.innerText = "Resume";
 	} else if (e.target.id == "reset") {
 		clearInterval(sessionStart);
+		const startBtn = document.querySelector("button#start");
+		startBtn.innerText = "Start";
+		startBtn.removeAttribute("disabled");
 		timerTime = sessions[currentSession].length;
-		document.querySelector(".timer-text").innerText = `${sessions[currentSession].length}:00`;
+		setTimerText(getTimerTextNode());
 	}
 }
 
 function updatePom() {
-	console.log(currentSession);
 	document.querySelectorAll(".pom-btn").forEach(pomBtn => {
 		if (pomBtn.id == currentSession) {
 			pomBtn.classList.add("active");
@@ -99,9 +104,23 @@ function updatePom() {
 			pomBtn.classList.remove("active");
 		}
 		document.querySelector(".session-title").innerText = sessions[currentSession].title;
-		document.querySelector(".timer-text").innerText = `${sessions[currentSession].length}:00`;
-		timerTime = 3;
+		timerTime = setTimerTime();
+		setTimerText(getTimerTextNode());
 	});
+}
+
+function setTimerText(node) {
+	let timerMinText = getMinutes(timerTime);
+	let secondsLeft = getSeconds(timerTime);
+	let timerSecText = formatSeconds(secondsLeft);
+	timerMinText = `${getMinutes(timerTime)}`;
+	secondsLeft = getSeconds(timerTime);
+	timerSecText = secondsLeft >= 10 ? `${secondsLeft}` : `0${secondsLeft}`;
+	node.innerText = `${timerMinText}:${timerSecText}`;
+}
+
+function setTimerTime() {
+	return sessions[currentSession].length;
 }
 
 function getMinutes(seconds) {
@@ -112,6 +131,14 @@ function getSeconds(seconds) {
 	return Math.floor(seconds % 60);
 }
 
+function formatSeconds(seconds) {
+	return seconds >= 10 ? seconds : `0${seconds}`;
+}
+
+function getTimerTextNode() {
+	return document.querySelector(".timer-text");
+}
+
 window.addEventListener("load", () => {
-	document.querySelector(".timer-text").innerText = `${timerMinText}:${timerSecText}`;
+	setTimerText(getTimerTextNode());
 });
