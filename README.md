@@ -2,6 +2,10 @@
 
 A pomodoro app with [Pom Poko](https://en.wikipedia.org/wiki/Pom_Poko) friends.
 
+Credits:
+
+- Taiko audio from freesound.org by [volivieri](https://freesound.org/people/volivieri/sounds/76586/)
+
 ### Project Links
 
 **VanillaJS Pomodoro**: https://github.com/geraldiner/pom-poko-pomodoro
