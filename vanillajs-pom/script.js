@@ -1,14 +1,14 @@
 const sessions = {
 	work: {
-		length: 1,
+		length: 25,
 		title: "Work Pom",
 	},
 	short: {
-		length: 2,
+		length: 5,
 		title: "Short Break",
 	},
 	long: {
-		length: 5,
+		length: 15,
 		title: "Long Break",
 	},
 };
@@ -38,8 +38,7 @@ function editTimer(e) {
 		const input = document.createElement("input");
 		input.type = "text";
 		input.value = parseInt(e.target.innerText);
-		input.autofocus = true;
-		input.addEventListener("focusout", () => {
+		input.addEventListener("blur", () => {
 			sessions[currentSession].length = parseInt(input.value);
 			timerTime = setTimerTime();
 			const span = document.createElement("span");
@@ -49,6 +48,7 @@ function editTimer(e) {
 			updateButtons("reset");
 		});
 		e.target.replaceWith(input);
+		input.focus();
 	}
 }
 
@@ -69,11 +69,13 @@ function timerControl(e) {
 		sessionStart = setInterval(() => {
 			if (timerTime > 0) {
 				timerTime--;
-				console.log(timerTime);
 				setTimerText(getTimerTextNode());
 			} else {
 				clearInterval(sessionStart);
-				updateToNextSession();
+				sessionEnding();
+				setTimeout(() => {
+					updateToNextSession();
+				}, 5900);
 			}
 		}, 1000);
 	} else if (e.target.id == "stop") {
@@ -83,6 +85,26 @@ function timerControl(e) {
 		timerTime = setTimerTime();
 		setTimerText(getTimerTextNode());
 	}
+}
+
+function sessionEnding() {
+	const audio = document.querySelector(".audio");
+	audio.play();
+	const imgDiv = document.querySelector(".timer-img");
+	const img = document.querySelector("img");
+	img.src = currentSession == "work" ? `assets/img/pompoko-nice-work.gif` : `assets/img/pompoko-back-to-work.gif`;
+	setTimeout(() => {
+		imgDiv.classList.remove("hide");
+		imgDiv.classList.add("slide-in");
+	}, 300);
+	setTimeout(() => {
+		imgDiv.classList.remove("slide-in");
+		imgDiv.classList.add("slide-out");
+	}, 5000);
+	setTimeout(() => {
+		imgDiv.classList.remove("slide-out");
+		imgDiv.classList.add("hide");
+	}, 5400);
 }
 
 function updateToNextSession() {
@@ -149,7 +171,7 @@ function setTimerText(node) {
 }
 
 function setTimerTime() {
-	return sessions[currentSession].length;
+	return sessions[currentSession].length * 60;
 }
 
 function getMinutes(seconds) {
