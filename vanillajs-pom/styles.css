@@ -118,6 +118,17 @@ button#reset {
 	background-color: lightslategray;
 }
 
+.timer-control.disabled {
+	background-color: gray !important;
+	color: #525252;
+	cursor: initial;
+}
+
+.timer-control.disabled:hover {
+	background-color: gray !important;
+	color: #525252 !important;
+}
+
 .pom-menu button:hover,
 .timer-controls button:hover,
 button#start:hover,

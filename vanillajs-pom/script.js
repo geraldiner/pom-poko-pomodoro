@@ -34,6 +34,7 @@ timerBtns.forEach(timerBtn => {
 
 function editTimer(e) {
 	if (e.target.className === "timer-text") {
+		clearInterval(sessionStart);
 		const input = document.createElement("input");
 		input.setAttribute("type", "text");
 		input.setAttribute("value", parseInt(e.target.innerText));
@@ -45,15 +46,15 @@ function editTimer(e) {
 			span.setAttribute("class", "timer-text");
 			setTimerText(span);
 			input.replaceWith(span);
-			const startBtn = document.querySelector("button#start");
-			startBtn.innerText = "Start";
-			startBtn.removeAttribute("disabled");
+			updateButtons("reset");
 		});
 		e.target.replaceWith(input);
 	}
 }
 
 function setSession(e) {
+	clearInterval(sessionStart);
+	updateButtons("reset");
 	document.querySelector(".pom-btn.active").classList.remove("active");
 	e.target.classList.add("active");
 	currentSession = e.target.id;
@@ -63,10 +64,8 @@ function setSession(e) {
 }
 
 function timerControl(e) {
+	updateButtons(e.target.id);
 	if (e.target.id == "start") {
-		const startBtn = document.querySelector("button#start");
-		startBtn.innerText = "Start";
-		startBtn.setAttribute("disabled", "disabled");
 		sessionStart = setInterval(() => {
 			if (timerTime > 0) {
 				timerTime--;
@@ -74,39 +73,59 @@ function timerControl(e) {
 				setTimerText(getTimerTextNode());
 			} else {
 				clearInterval(sessionStart);
-				const startBtn = document.querySelector("button#start");
-				startBtn.innerText = "Start";
-				startBtn.removeAttribute("disabled");
 				currentSession = currentSession == "work" ? "short" : "work";
-				updatePom();
+				updateToNextSession();
 			}
 		}, 1000);
 	} else if (e.target.id == "stop") {
 		clearInterval(sessionStart);
-		const startBtn = document.querySelector("button#start");
-		startBtn.removeAttribute("disabled");
-		startBtn.innerText = "Resume";
 	} else if (e.target.id == "reset") {
 		clearInterval(sessionStart);
-		const startBtn = document.querySelector("button#start");
-		startBtn.innerText = "Start";
-		startBtn.removeAttribute("disabled");
 		timerTime = sessions[currentSession].length;
 		setTimerText(getTimerTextNode());
 	}
 }
 
-function updatePom() {
+function updateToNextSession() {
 	document.querySelectorAll(".pom-btn").forEach(pomBtn => {
 		if (pomBtn.id == currentSession) {
 			pomBtn.classList.add("active");
 		} else {
 			pomBtn.classList.remove("active");
 		}
-		document.querySelector(".session-title").innerText = sessions[currentSession].title;
-		timerTime = setTimerTime();
-		setTimerText(getTimerTextNode());
 	});
+	document.querySelector(".session-title").innerText = sessions[currentSession].title;
+	timerTime = setTimerTime();
+	setTimerText(getTimerTextNode());
+	updateButtons("reset");
+}
+
+function updateButtons(ctrl) {
+	const startBtn = document.querySelector("button#start");
+	const stopBtn = document.querySelector("button#stop");
+	if (ctrl == "stop") {
+		startBtn.innerText = "Resume";
+		startBtn.disabled = false;
+		stopBtn.disabled = true;
+	} else if (ctrl == "start") {
+		startBtn.innerText = "Start";
+		startBtn.disabled = true;
+		stopBtn.disabled = false;
+	} else if (ctrl == "reset") {
+		startBtn.innerText = "Start";
+		startBtn.disabled = false;
+		stopBtn.disabled = true;
+	}
+	setDisabled(startBtn);
+	setDisabled(stopBtn);
+}
+
+function setDisabled(btn) {
+	if (btn.disabled) {
+		btn.classList.add("disabled");
+	} else {
+		btn.classList.remove("disabled");
+	}
 }
 
 function setTimerText(node) {
