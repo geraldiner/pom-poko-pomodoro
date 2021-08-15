@@ -118,6 +118,29 @@ button#reset {
 	background-color: lightslategray;
 }
 
+.timer-img {
+	width: 40%;
+	position: absolute;
+}
+
+.timer-img.slide-in {
+	-webkit-animation: slideFromTop 0.75s 1 normal ease-in;
+	animation: slideFromTop 0.75s 1 normal ease-in;
+}
+
+.timer-img.slide-out {
+	-webkit-animation: slideUp 0.85s 1 normal ease-out;
+	animation: slideUp 0.85s 1 normal ease-out;
+}
+
+.timer-img.hide {
+	display: none;
+}
+
+.timer-img img {
+	width: 100%;
+}
+
 .timer-control.disabled {
 	background-color: gray !important;
 	color: #525252;
@@ -136,6 +159,51 @@ button#stop:hover,
 button#reset:hover {
 	color: black;
 	background-color: #fefefe;
+}
+
+@-webkit-keyframes slideFromTop {
+	0% {
+		opacity: 0.75;
+		margin-top: -200px;
+	}
+	100% {
+		opacity: 1;
+		margin-top: 0px;
+	}
+}
+
+@keyframes slideFromTop {
+	0% {
+		opacity: 0.75;
+		margin-top: -200px;
+	}
+	100% {
+		opacity: 1;
+		margin-top: 0px;
+	}
+}
+
+@-webkit-keyframes slideUp {
+	0% {
+		opacity: 1;
+		margin-top: 0px;
+	}
+	100% {
+		opacity: 0;
+
+		margin-top: -200px;
+	}
+}
+
+@keyframes slideUp {
+	0% {
+		opacity: 1;
+		margin-top: 0px;
+	}
+	100% {
+		opacity: 0;
+		margin-top: -200px;
+	}
 }
 
 @media screen and (max-width: 769px) {

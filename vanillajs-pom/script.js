@@ -88,6 +88,9 @@ function timerControl(e) {
 function updateToNextSession() {
 	if (currentSession == "work") {
 		numberOfSessions++;
+	} else if (currentSession == "long") {
+		currentSession = "short";
+		numberOfSessions = 0;
 	}
 	if (numberOfSessions >= 4) {
 		currentSession = "long";
