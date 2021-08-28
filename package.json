@@ -1,0 +1,24 @@
+{
+  "name": "pom-poko-pomodoro",
+  "version": "1.0.0",
+  "description": "A pomodoro app with [Pom Poko](https://en.wikipedia.org/wiki/Pom_Poko) friends.",
+  "main": "index.js",
+  "dependencies": {
+    "gh-pages": "^3.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "deploy": "gh-pages -d vanillajs-pom"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geraldiner/pom-poko-pomodoro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geraldiner/pom-poko-pomodoro/issues"
+  },
+  "homepage": "https://geraldiner.github.io/pom-poko-pomodoro"
+}
