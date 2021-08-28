@@ -1,0 +1,225 @@
+:root {
+	--dark-gray: #525252;
+	--gold: #ecbd16;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 5rem auto;
+	font-size: 16pt;
+	font-family: "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif;
+	background-color: #e3e3e3;
+}
+
+.pomodoro {
+	width: 50%;
+	height: 50%;
+	display: flex;
+	color: white;
+	flex-direction: column;
+}
+
+.pomodoro > * {
+	width: 100%;
+}
+
+.pom-menu,
+.timer-controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+}
+
+.pom-menu li,
+.timer-controls li {
+	display: inline-block;
+	width: calc(100% / 3) - 1rem;
+	text-align: center;
+}
+
+.pom-menu button,
+.timer-controls button {
+	width: 100%;
+	height: 40px;
+	padding: 8px 20px;
+	border: 2px solid #111;
+	color: white;
+	background-color: var(--dark-gray);
+	cursor: pointer;
+}
+
+.pom-menu li:not(:first-child) button {
+	border-left: none;
+}
+
+.timer-controls li {
+	margin: 0 1rem;
+}
+
+.timer-controls button {
+	border: none;
+}
+
+.pom-btn.active {
+	background-color: var(--gold);
+	color: black;
+	font-weight: bold;
+	border-bottom: none;
+}
+
+.timer-box {
+	background-color: var(--dark-gray);
+	padding: 30px;
+	text-align: center;
+}
+
+.timer-text {
+	font-size: 3rem;
+}
+
+input {
+	border: none;
+	width: 50%;
+	padding: 1rem;
+	font-size: 2rem;
+	text-align: center;
+}
+
+.timer-clock {
+	width: 220px;
+	height: 220px;
+	border: 8px solid var(--gold);
+	border-radius: 50%;
+	margin: 30px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.timer-controls button {
+	color: black;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 2pt;
+}
+
+button#start {
+	background-color: var(--gold);
+}
+
+button#stop {
+	background-color: tomato;
+}
+
+button#reset {
+	background-color: lightslategray;
+}
+
+.timer-img {
+	width: 40%;
+	position: absolute;
+	margin-top: -70px;
+}
+
+.timer-img.slide-in {
+	-webkit-animation: slideFromTop 0.5s 1 normal linear;
+	animation: slideFromTop 0.5s 1 normal linear;
+}
+
+.timer-img.slide-out {
+	-webkit-animation: slideUp 0.5s 1 normal ease-out;
+	animation: slideUp 0.5s 1 normal ease-out;
+}
+
+.timer-img.hide {
+	display: none;
+}
+
+.timer-img img {
+	width: 100%;
+}
+
+.timer-control.disabled {
+	background-color: gray !important;
+	color: #525252;
+	cursor: initial;
+}
+
+.timer-control.disabled:hover {
+	background-color: gray !important;
+	color: #525252 !important;
+}
+
+.pom-menu button:hover,
+.timer-controls button:hover,
+button#start:hover,
+button#stop:hover,
+button#reset:hover {
+	color: black;
+	background-color: #fefefe;
+}
+
+@-webkit-keyframes slideFromTop {
+	0% {
+		opacity: 0.75;
+		margin-top: -200px;
+	}
+	100% {
+		opacity: 1;
+		margin-top: -70px;
+	}
+}
+
+@keyframes slideFromTop {
+	0% {
+		opacity: 0.75;
+		margin-top: -200px;
+	}
+	100% {
+		opacity: 1;
+		margin-top: -70px;
+	}
+}
+
+@-webkit-keyframes slideUp {
+	0% {
+		opacity: 1;
+		margin-top: -70px;
+	}
+	100% {
+		opacity: -70;
+		margin-top: -200px;
+	}
+}
+
+@keyframes slideUp {
+	0% {
+		opacity: 1;
+		margin-top: -70px;
+	}
+	100% {
+		opacity: 0;
+		margin-top: -200px;
+	}
+}
+
+@media screen and (max-width: 769px) {
+	.timer-controls {
+		display: block;
+	}
+	.timer-controls li {
+		margin: 5px 0;
+		width: 100%;
+	}
+}
