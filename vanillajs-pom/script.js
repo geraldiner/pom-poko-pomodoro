@@ -1,6 +1,6 @@
 const sessions = {
 	work: {
-		length: 25,
+		length: 5,
 		title: "Work Pom",
 	},
 	short: {
@@ -171,7 +171,7 @@ function setTimerText(node) {
 }
 
 function setTimerTime() {
-	return sessions[currentSession].length * 60;
+	return sessions[currentSession].length;
 }
 
 function getMinutes(seconds) {

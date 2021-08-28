@@ -5,6 +5,7 @@ A pomodoro app with [Pom Poko](https://en.wikipedia.org/wiki/Pom_Poko) friends.
 Credits:
 
 - Taiko audio from freesound.org by [volivieri](https://freesound.org/people/volivieri/sounds/76586/)
+- Pom Poko images from Tumblr by an anonymous source
 
 ### Project Links
 
