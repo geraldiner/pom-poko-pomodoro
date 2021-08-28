@@ -9,7 +9,7 @@ Credits:
 
 ### Project Links
 
-**VanillaJS Pomodoro**: https://github.com/geraldiner/pom-poko-pomodoro
+**VanillaJS Pomodoro**: https://github.com/geraldiner/pom-poko-pomodoro/tree/main/vanillajs-pom
 
 ![Pom Poko Pomodoro app](https://raw.githubusercontent.com/geraldiner/pom-poko-pomodoro/main/vanillajs-pom/assets/img/demo.gif)
 
