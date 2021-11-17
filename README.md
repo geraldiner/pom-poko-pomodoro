@@ -40,6 +40,10 @@ No matter what your experience level, being an engineer means continuously learn
 
 Check out other stuff I've worked on:
 
+**Rehabitter:** https://github.com/geraldiner/rehabitter
+
+**K.K. Radio:** https://github.com/geraldiner/kk-radio
+
 **Interactive Piano:** https://github.com/geraldiner/piano
 
-**ACNH Quotes:** https://github.com/geraldiner/acnh-quotes
+**Pom Poko Pomodoro:** https://github.com/geraldiner/pom-poko-pomodoro
